@@ -1,0 +1,54 @@
+﻿
+@using System.Globalization;
+@{
+    ViewBag.Title = "Danh sách sản phẩm | Nhà sách AC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    CultureInfo ci = new CultureInfo("vi-VN");
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            @Html.Partial("SideMenu")
+            <div id="search_result" class="col-lg-9 padding-right">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center" style="height:230px">
+                                    @if (string.IsNullOrEmpty(item.AvatarImage))
+                                    {
+                                        <img style="height:150px;width:100%;object-fit:contain"
+                                             src="~/Content/images/home/default-image.png" />
+                                    }
+                                    else
+                                    {
+                                        <img style="height:150px;width:100%;object-fit:contain"
+                                             src="@Url.Content(item.AvatarImage)"
+                                             onerror="if (this.src != '/Content/images/home/default-image.png') this.src = '/Content/images/home/default-image.png';" />
+                                    }
+                                    <h2>@(item.Price.ToString("0,0.###", ci)) đ</h2>
+                                    <p class="shorten-name"><b>@item.Name</b></p>
+                                </div>
+                                <div class="product-overlay">
+                                    <div class="overlay-content">
+                                        <h2>@(item.Price.ToString("0,0.###", ci)) đ</h2>
+                                        <p><a href="/Products/Single?id=@item.ID">@item.Name</a></p>
+                                        <a href="/Cart/Index" class="btn btn-default add-to-cart">
+                                            <p hidden>@item.ID</p>
+                                            <i class="fa fa-shopping-cart"></i>
+                                            Thêm vào giỏ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+
